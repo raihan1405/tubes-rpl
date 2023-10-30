@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CafeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,3 +31,8 @@ Route::get('/info', function () {
 Route::get('/about', function () {
     return view('halaman.about');
 });
+
+
+
+//CRUD CAFE
+Route::resource('/cafe',CafeController::class);

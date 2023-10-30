@@ -44,15 +44,19 @@
 
 .card-container {
     display: flex; /* Menggunakan Flexbox untuk mengatur elemen card dalam baris */
-    justify-content: space-between; /* Membuat jarak antara card secara merata */
-    flex-wrap: wrap; /* Jika elemen lebih banyak dari yang bisa muat pada satu baris, maka wrap ke baris berikutnya */
+     /* Membuat jarak antara card secara merata */
+    flex-wrap: wrap; 
+   /* Jika elemen lebih banyak dari yang bisa muat pada satu baris, maka wrap ke baris berikutnya */
 }
 
 .card {
+    color: white;
     flex: 0 0 calc(20% - 15px); /* Mengatur lebar card, dengan sedikit ruang di antara (misalnya, 20px) */
     margin-top: 100px;
-    margin-left: 25px ;
+    margin-left: 50px ;
     margin-right: 25px;
+    background-color: rgba(0, 0, 0, 0.5);
+    
 }
 .card-search{
     padding-top: 20px;
@@ -66,4 +70,10 @@
     margin-bottom: 20px;
     width: 500px;
     height: 500px;
+}
+.card-img-top{
+    align-self: center;
+    margin-top: 5px;
+    width: 245px;
+    height: 200px;
 }
