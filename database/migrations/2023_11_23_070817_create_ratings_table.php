@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cafe', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('alamat');
-            $table->string('gambar');
-            $table->text('content');
+            $table->String('komentar');
+            $table->integer('rating');
+            $table->tinyInteger('status');
             $table->timestamps();
+
+            $table->unsignedBigInteger('cafe_id');
+ 
+            $table->foreign('cafe_id')->references('id')->on('cafe');
 
             $table->unsignedBigInteger('user_id');
  
@@ -34,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cafe');
+        Schema::dropIfExists('ratings');
     }
 };

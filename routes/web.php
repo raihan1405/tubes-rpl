@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CafeController;
+use App\Http\Controllers\RatingsController;
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,26 +15,21 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//start page
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/master', function () {
-    return view('layout.master');
-});
+//cafe
+Route::resource('/cafe', CafeController::class);
 
-Route::get('/recom', function () {
-    return view('halaman.home');
-});
-Route::get('/info', function () {
-    return view('halaman.cafe');
-});
-Route::get('/about', function () {
-    return view('halaman.about');
-});
+//ratings
+Route::resource('/ratings', RatingsController::class);
+
+//menu
+Route::resource('/menu', MenuController::class);
+
+//auth
+Auth::routes();
 
 
-
-//CRUD CAFE
-Route::resource('/cafe',CafeController::class);

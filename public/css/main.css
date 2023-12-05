@@ -3,9 +3,9 @@
 }
 
 .bg{
-    background-image: url(/img/bg.png);
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url("../img/bg.png");
+    /* background-repeat: no-repeat; */
+    /* background-size: cover;  */
 }
 .caption{
     text-align: center;

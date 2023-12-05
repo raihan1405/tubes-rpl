@@ -10,18 +10,30 @@
         </form>
       </nav>
     <div class="card-container">
-        @forelse ($cafe as $item)
+        @forelse ($cafes as $cafe)
         <div class="card">
-            <img src="{{asset('image/' . $item->gambar)}}" class="card-img-top" alt="...">
+            <img src="{{asset('image/' . $cafe->gambar)}}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">{{$item->nama}}</h5>
-                <p class="card-text">{{$item->alamat}}</p>
-                <a href="/info" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">{{$cafe->nama}}</h5>
+                <p class="card-text">{{$cafe->alamat}}</p>
+                @if (!empty($cafe->averageRating))
+                    <?php
+                        $count = 1;
+                        while($count <=  $cafe->averageRating ){?>
+                            <span>&#9733;</span>
+                    <?php $count++;} ?>
+                    ({{ number_format($cafe->averageRating, 1) }})
+                @else
+                    <p>No reviews yet</p>
+                @endif
+              <div>&nbsp;</div> 
+                <a href="/cafe/{{$cafe->id}}" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
-        @empty
-        
+    @empty
+        <p>No cafes found</p>
     @endforelse
+    
     </div>
     
     

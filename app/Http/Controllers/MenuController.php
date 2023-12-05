@@ -1,40 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\cafe;
-use App\Models\Review;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Menu;
+use App\Models\Cafe;
 
 use Illuminate\Http\Request;
 
-class CafeController extends Controller
+class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index','show');
-        $this->middleware('isAdmin')->only('create', 'edit'); // Apply 'isAdmin' middleware only to the create and edit methods
-    }
     public function index()
     {
-    // Retrieve all cafes with their associated reviews
-    $cafes = Cafe::with('reviews')->get();
+        $menu = Menu::all();
 
-    // Calculate the average rating for each cafe
-    $cafes->each(function ($cafe) {
-        $cafe->averageRating =  $cafe->reviews->avg('rating');
-    });
-
-    // Sort cafes by average rating in descending order
-    $sortedCafes = $cafes->sortByDesc('averageRating');
-
-    return view('cafe.index', ['cafes' => $sortedCafes]);
+        return view('menu.index', ['menu' => $menu]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -43,7 +28,7 @@ class CafeController extends Controller
      */
     public function create()
     {
-        return view('cafe.create');
+        return view('menu.create');
     }
 
     /**
@@ -56,30 +41,24 @@ class CafeController extends Controller
     {
         $request->validate([
             'nama' => 'required',
-            'alamat' => 'required',
+            'harga' => 'required',
             'gambar' => 'required|mimes:jpg,jpeg,png',
-            'content' => 'required'
         ]);
     
         $filename = time() . '.' . $request->gambar->extension();
         $request->gambar->move(public_path('image'), $filename);
     
-        // Assuming there's a relationship between 'cafe' and 'User'
-        $user_id = auth()->user()->id;
-        
+        $user = Auth::user();
+        $cafe = $user->cafes->first(); // Assuming a user can have multiple cafes, adjust accordingly
     
-        $cafe = new Cafe;
-        $cafe->nama = $request->nama;
-        $cafe->alamat = $request->alamat;
-        $cafe->gambar = $filename;
-        $cafe->content = $request->content;
-        $cafe->user_id = $user_id; // Set the user_id
+        $menu = new Menu;
+        $menu->nama = $request->nama;
+        $menu->harga = $request->harga;
+        $menu->gambar = $filename;
+        $menu->user_id = $user->id;
+        $menu->cafe_id = $cafe->id; // Set the cafe_id
     
-        $cafe->save();
-    
-        return redirect('/cafe');
-
-
+        $menu->save();
     }
 
     /**
@@ -90,15 +69,7 @@ class CafeController extends Controller
      */
     public function show($id)
     {
-        
-    // Retrieve all reviews for the specific cafe
-    $reviews = Review::where('cafe_id', $id)->with('user')->orderBy('rating', 'desc')->get();
-
-    // Retrieve the cafe details
-    $cafe = Cafe::find($id);
-
-    // Pass the cafe details and reviews to the view
-    return view('cafe.detail', compact('cafe', 'reviews'));
+        //
     }
 
     /**
