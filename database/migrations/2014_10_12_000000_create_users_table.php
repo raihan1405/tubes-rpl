@@ -22,6 +22,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->string('role')->default('user'); // Add a 'role' column
+            $table->string('pdf_file')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
         });
     }
 

@@ -1,8 +1,57 @@
+
 <nav class="navbar navbar-light ">
         <a class="navbar-brand" href="#">
             <img src="/img/img.png" height="15" class="d-inline-block align-top" alt="">
         </a>
         <ul class="nav justify-content-end" >
+          <li class="nav-item">
+            <div class="dropdown">
+                 
+              <button id="dLabel" type="button" class="btn btn-primary" data-bs-toggle="dropdown">
+                  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge bg-danger">{{ count((array) session('cart')) }}</span>
+              </button>
+
+              <div class="dropdown-menu" aria-labelledby="dLabel">
+                <!-- Isi dropdown menu di sini -->
+                <div class="row total-header-section">
+                    @php $total = 0 @endphp
+                    @foreach((array) session('cart') as $id => $details)
+                        @php
+                            // Pastikan nilai harga dan quantity adalah numerik sebelum perhitungan
+                            $price = is_numeric($details['price']) ? $details['price'] : 0;
+                            $quantity = is_numeric($details['quantity']) ? $details['quantity'] : 0;
+            
+                            $total += $price * $quantity;
+                        @endphp
+                    @endforeach
+                    <div class="col-lg-12 col-sm-12 col-12 total-section text-right">
+                        <p class="text-left mb-0 total-text">Total: <span class="text-black">${{$total}}</span></p>
+                    </div>
+                </div>
+                @if(session('cart'))
+                    @foreach(session('cart') as $id => $details)
+                        <div class="row cart-detail">
+                            <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                <img src="{{ asset('image') }}/{{ $details['photo'] }}" class="img-fluid" alt="Product Image" />
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                <p class="total-text">{{ $details['menu_name'] }}</p>
+                                <span class="price text-success"> ${{ $details['price'] }}</span> 
+                                <span class="count total-text"> Quantity:{{ $details['quantity'] }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                        <a href="{{ route('cart') }}" class="btn btn-primary btn-block">View all</a>
+                    </div>
+                </div>
+            </div>
+            
+               
+            </div>
+          </li> 
           <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
               
@@ -17,28 +66,22 @@
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             
           @if(Auth::check())
-              <h5 class="dropdown-item" >Role : {{ Auth::user()->role }}</h5>
-              @if (Auth::user()->role == "admin")
-                      {{-- user sudah memiliki cafe --}}
-                  @if (Auth::user()->cafes->count() > 0)
-                      @php $cafeId = Auth::user()->cafes->first()->id; @endphp
-                      <a class="dropdown-item" href="/cafe/{{$cafeId}}">Your Cafe</a>
-                  @else
-                      <!-- User belum memiliki kafe -->
-                      <a class="dropdown-item" href="/cafe/create">Tambah Cafe</a>
-                  @endif
+              @if (Auth::user()->role == "admin" || Auth::user()->role == "developer" && Auth::user()->status == "approved")
+                <a class="dropdown-item" href="/table-cafe">Setting</a>
+              @else
+                {{-- CRUD USER --}}
               @endif
               <a class="dropdown-item" href="{{ route('logout') }}"
                  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                  logout
+                  Logout
               </a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                   @csrf
               </form>
           @else
-              <a class="dropdown-item" href="/login">login</a>
+              <a class="dropdown-item" href="/login">Login</a>
           @endif
-                
+               
                      
             </div>
         </li>
@@ -46,17 +89,15 @@
               <a class="nav-link " href="/">HOME</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">SPOT</a>
+              <a class="nav-link" href="cafe">SPOT</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/about">ABOUT</a>
+              <a class="nav-link" href="about">ABOUT</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">CONTACT</a>
+              <a class="nav-link" href="contact">CONTACT</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" ><img src="/img/Component.png" alt="" height="30"></a>
-              </li>
+            
           </ul>
     </nav>
     <!-- jQuery -->

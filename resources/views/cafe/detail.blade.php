@@ -53,6 +53,16 @@
 
 }
 </style>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <div class="cardcafe ">
     <main class="container py-3">
 
@@ -80,23 +90,10 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="d-flex">
-                            <a type="button" class="btn btn-outline-primary mt-5 me-1" href="/cafe">Menu</a>
+                            <a type="button" class="btn btn-outline-primary mt-5 me-1" href="/menu/{{$cafe->id}}">Menu</a>
                         </div>
                     </div>
                 </div>
-
-                {{-- jika user adalah pemilik cafe makan akan mendapat akses edit & delete --}}
-                @if (Auth::user()->role == "admin" && $cafe->user_id == Auth::user()->id)
-                <div class="row">
-                    <div class="col-4">
-                        <div class="d-flex">
-                            <a type="button" class="btn btn-danger mt-5 " href="/cafe">Edit</a>
-                            <a type="button" class="btn btn-warning mt-5" href="/cafe">Delete</a>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
                 
             </div>
             
@@ -130,8 +127,10 @@
                <h3>Write a Review</h3>
                 <form method="POST" action="/ratings" name="ratingForm" id="formRating">
                     @csrf
+                    <input type="hidden" name="cafe_id" value="{{ $cafe->id }}">
                     <div class="row col-6 my-3">
                         <div class="rate">
+                            
                             <input type="radio" id="star5" name="rate" value="5" />
                             <label for="star5" title="text">5 stars</label>
                             <input type="radio" id="star4" name="rate" value="4" />
@@ -155,7 +154,6 @@
                     {{-- <div>&nbsp;</div> --}}
                     <div class="form-group">
                         <input type="submit" name="Submit" >
-
                     </div>
                       
                 </form>

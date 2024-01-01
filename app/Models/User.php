@@ -14,7 +14,7 @@ class User extends Authenticatable
 
     public function cafes()
     {
-    return $this->hasMany(Cafe::class);
+        return $this->hasMany(Cafe::class);
     }
     /**
      * The attributes that are mass assignable.
@@ -26,6 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'pdf_file',
+        'status',
     ];
 
     /**

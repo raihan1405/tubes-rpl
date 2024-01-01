@@ -20,7 +20,7 @@ return new class extends Migration
             $table->String('gambar');
             $table->timestamps();
 
-            $table->unsignedBigInteger('cafe_id');
+            $table->unsignedBigInteger('cafe_id')->nullable();
  
             $table->foreign('cafe_id')->references('id')->on('cafe');
 

@@ -1,6 +1,10 @@
-@extends('layout.master')
+@extends('admin.dashboard')
 
-@section('content')
+@section('judulAdmin')
+Tambah Cafe
+@endsection
+
+@section('contentAdmin')
 <form action="/cafe" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-group">

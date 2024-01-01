@@ -1,14 +1,14 @@
 @extends('layout.master')
 
 @section('content')
+<title>CoffeSkuy</title>
 <div class="cardhome">
+    <form class="form-inline" action="/cafes/search" method="GET">
+        @csrf
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
     
-    <nav class="card-search">
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </nav>
     <div class="card-container">
         @forelse ($cafes as $cafe)
         <div class="card">
@@ -27,7 +27,7 @@
                     <p>No reviews yet</p>
                 @endif
               <div>&nbsp;</div> 
-                <a href="/cafe/{{$cafe->id}}" class="btn btn-primary">Go somewhere</a>
+                <a href="/cafe/{{$cafe->id}}" class="btn btn-primary">Detail</a>
             </div>
         </div>
     @empty
@@ -35,7 +35,5 @@
     @endforelse
     
     </div>
-    
-    
 </div>
 @endsection

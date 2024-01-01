@@ -1,9 +1,12 @@
-@extends('layout.master')
+@extends('admin.dashboard')
 
-@section('content')
+@section('judulAdmin')
+    Halaman Tambah Menu
+@endsection
+
+@section('contentAdmin')
 <form action="/menu" method="POST" enctype="multipart/form-data">
     @csrf
-
     <div class="form-group">
       <label>Nama</label>
       <input type="text" name="nama" class="form-control">
@@ -25,7 +28,17 @@
       @error('gambar')
           <div class="alert alert-danger">{{$message}}</div>
       @enderror
+      <div class="form-group">
+        <label>Cafe(s)</label>
+    @forelse($cafes as $cafe)
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="cafe_id" value="{{ $cafe->id }}">
+            <label class="form-check-label">{{ $cafe->nama }}</label>
+        </div>
+    @empty
+        <p>No cafes available.</p>
+    @endforelse
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
 @endsection

@@ -19,17 +19,21 @@ class RoleMiddleware
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
-            if(Auth::user()->role == 'admin'){
+            if((Auth::user()->role == 'admin'||Auth::user()->role == 'developer')&&Auth::user()->status == 'approved'){
                 return $next($request);
             }else{
-                return redirect('/home')->with('message','access denied');
+                if ($request->ajax()) {
+                    return response()->json(['error' => 'Access denied'], 403);
+                } else {
+                    return redirect('/')->with('warning', 'Status kamus belum di approved');
+                }
             }
 
         }else{
-            return redirect('/login')->with('message','access denied');
+            return redirect('/login')->with('warning','Silahkan Login');
         }
 
         return $next($request);
-
     }
 }
+

@@ -12,5 +12,8 @@ class Menu extends Model
     protected $table = 'menu';
     protected $fillable = ['nama', 'harga', 'gambar', 'user_id', 'cafe_id'];
 
-    
+    public function cafes()
+{
+    return $this->belongsToMany(Cafe::class);
+}
 }
