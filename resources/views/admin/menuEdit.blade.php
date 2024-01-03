@@ -32,7 +32,7 @@
       @enderror
       <div class="form-group">
         <label>Cafe(s)</label>
-    @forelse($cafe as $cafe)
+    @forelse($cafes as $cafe)
         <div class="form-check">
             <input class="form-check-input" type="checkbox" name="cafe_id" value="{{ $cafe->id }}">
             <label class="form-check-label">{{ $cafe->nama }}</label>

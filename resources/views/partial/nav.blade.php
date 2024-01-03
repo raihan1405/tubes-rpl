@@ -3,7 +3,9 @@
         <a class="navbar-brand" href="#">
             <img src="/img/img.png" height="15" class="d-inline-block align-top" alt="">
         </a>
+        
         <ul class="nav justify-content-end" >
+          @if(Auth::check())
           <li class="nav-item">
             <div class="dropdown">
                  
@@ -48,10 +50,12 @@
                     </div>
                 </div>
             </div>
-            
+          
                
             </div>
+          
           </li> 
+          @endif
           <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
               
@@ -99,6 +103,7 @@
             </li>
             
           </ul>
+          
     </nav>
     <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
