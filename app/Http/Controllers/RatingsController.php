@@ -37,33 +37,33 @@ class RatingsController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
-    $request->validate([
-        'rate' => 'required|integer|between:1,5',
-        'review' => 'required|string',
-        'cafe_id' => 'required',
-    ]);
+        $request->validate([
+            'rate' => 'required|integer|between:1,5',
+            'review' => 'required|string',
+            'cafe_id' => 'required',
+        ]);
 
-    try {
-        // Assuming there's a relationship between 'cafe' and 'User'
-        $user_id = auth()->user()->id;
+        try {
+            // Assuming there's a relationship between 'cafe' and 'User'
+            $user_id = auth()->user()->id;
 
-        // Create a new review
-        $review = new Review;
-        $review->rating = $request->rate;
-        $review->komentar = $request->review;
-        $review->status = 0;
-        $review->user_id = $user_id; // Set the user_id
-        $review->cafe_id = $request->cafe_id; // Set the cafe_id
+            // Create a new review
+            $review = new Review;
+            $review->rating = $request->rate;
+            $review->komentar = $request->review;
+            $review->status = 0;
+            $review->user_id = $user_id; // Set the user_id
+            $review->cafe_id = $request->cafe_id; // Set the cafe_id
 
-        // Save the review
-        $review->save();
+            // Save the review
+            $review->save();
 
-        // Redirect with success message
-        return redirect()->back()->with('success', 'Review submitted successfully!');
-    } catch (\Exception $e) {
-        // Redirect with error message
-        return redirect()->back()->with('error', 'You need Login for give ratings.');
-    }
+            // Redirect with success message
+            return redirect()->back()->with('success', 'Review submitted successfully!');
+        } catch (\Exception $e) {
+            // Redirect with error message
+            return redirect()->back()->with('error', 'You need Login for give ratings.');
+        }
     }
 
     /**

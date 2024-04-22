@@ -1,23 +1,20 @@
 @extends('layout.master')
 
 @section('content')
-<style>
-.container {
-    display: flex;
-    justify-content: center;
-}
-</style>
+
 <div class="cardhome">
     
-    <form class="form-inline" action="/search/{{ $cafe }}" method="GET">
+    <form class="form-inline my-3" action="/search/{{ $cafe }}" method="GET">
         @csrf
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+
       </nav>
-    <div class="card-container">
+    <div class="container">
+        <div class="row">
         @forelse ($menu as $item)
-        <div class="card">
+        <div class="col-md-4 my-3">
+            <div class="card">
             <img src="{{asset('image/' . $item->gambar)}}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{$item->nama}}</h5>
@@ -28,9 +25,12 @@
                 </div>
             </div>
         </div>
+    </div>
     @empty
         <p>No menu found</p>
     @endforelse
+    </div>
+        
     
     </div>
 </div>

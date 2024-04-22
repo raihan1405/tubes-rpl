@@ -185,11 +185,11 @@ class MenuController extends Controller
         $query = $request->input('query');
     
      
-            // Perform the search logic using the $query
-            $keywords = explode(' ', $query);
-            $menu = Menu::where('cafe_id', $id)->where(function ($queryBuilder) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $queryBuilder->where('nama', 'like', "%$keyword%");
+        // Perform the search logic using the $query
+        $keywords = explode(' ', $query);
+        $menu = Menu::where('cafe_id', $id)->where(function ($queryBuilder) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $queryBuilder->where('nama', 'like', "%$keyword%");
                 }
             })->get();
 
@@ -201,7 +201,7 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
   
         $cart = session()->get('cart', []);
-  
+
         if(isset($cart[$id])) {
             $cart[$id]['quantity']++;
         }  else {
@@ -209,7 +209,8 @@ class MenuController extends Controller
                 "menu_name" => $menu->nama,
                 "photo" => $menu->gambar,
                 "price" => $menu->harga,
-                "quantity" => 1
+                "quantity" => 1,
+                
             ];
         }
   
@@ -219,16 +220,17 @@ class MenuController extends Controller
 
     public function clearCart()
     {
-    // Mengosongkan array cart tanpa menghapus kunci 'cart' dari session
-    session(['cart' => []]);
+    
+        session(['cart' => []]);
 
-    return redirect()->back()->with('success', 'Cart cleared successfully!');
+        return redirect()->back()->with('success', 'Cart cleared successfully!');
     }
     public function cart()
     {
         $title = 'Delete Menu';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
+
         return view('cart',compact('title','text'));
     }
     public function updateCart(Request $request)

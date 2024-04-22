@@ -10,7 +10,7 @@ class cafe extends Model
     use HasFactory;
 
     protected $table = 'cafe';
-    protected $fillable = ['nama','alamat','gambar','content'];
+    protected $fillable = ['nama','alamat','gambar','content','latitude','longitude'];
 
     public function reviews()
     {
@@ -25,7 +25,11 @@ class cafe extends Model
 
     public function menus()
     {
-    return $this->hasMany(Menu::class);
+        return $this->hasMany(Menu::class);
+    }
+    
+    public function favorites() {
+        return $this->hasMany(Favorite::class, 'cafe_id');
     }
 
 }

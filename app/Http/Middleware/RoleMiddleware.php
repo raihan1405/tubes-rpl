@@ -30,7 +30,7 @@ class RoleMiddleware
             }
 
         }else{
-            return redirect('/login')->with('warning','Silahkan Login');
+            return redirect('/')->with('warning','Silahkan Login');
         }
 
         return $next($request);

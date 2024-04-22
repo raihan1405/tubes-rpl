@@ -1,19 +1,20 @@
 @extends('layout.master')
-    
-@section('content')>
+
+@section('content')
     <div class="container">
         <div class='row'>
             <div class='col-md-12'>
                 <div class="card">
                     <div class="card-header">
-                    Cancel
+                        Cancel
                     </div>
                     <div class="card-body">
-                        <a href="{{ url('/') }}" class="btn btn-info"> <i class="fa fa-arrow-left"></i> Continue Shopping</a>
+                        <a href="{{ route('cart') }}" class="btn btn-info"> <i class="fa fa-arrow-left"></i> Continue
+                            Shopping</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+    </body>
 @endsection

@@ -13,19 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cafe', function (Blueprint $table) {
+        Schema::create('favorite', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('alamat');
-            $table->string('gambar');
-            $table->text('content');
-            $table->string('latitude', 15)->nullable();
-            $table->string('longitude', 15)->nullable();
-
             $table->timestamps();
 
+            $table->unsignedBigInteger('cafe_id')->nullable();
+            $table->foreign('cafe_id')->references('id')->on('cafe');
+
             $table->unsignedBigInteger('user_id');
- 
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -37,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cafe');
+        Schema::dropIfExists('favorite');
     }
 };

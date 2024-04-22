@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest');  // gabisa ke halaman register kecuali guest 
     }
 
     /**
@@ -54,8 +54,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
-    
-        // Check if the role is 'admin', then add validation rules for the 'pdf' field
+
         if (array_key_exists('role', $data) && $data['role'] === 'admin') {
             $rules['pdf'] = ['required', 'file', 'mimes:pdf', 'max:2048'];
         }
@@ -72,11 +71,8 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         if (isset($data['role'])) {
-            $status = ($data['role'] === 'user') ? 'approved' : 'pending';
-        } else {
-            // Provide a default status or handle the absence of 'role' key as needed
-            $status = 'pending';
-        }
+            $status = ($data['role'] === 'user') ? 'rejected' : 'pending';
+        } 
         
         $user = User::create([
             'name' => $data['name'],
@@ -88,11 +84,12 @@ class RegisterController extends Controller
         
        
         if (array_key_exists('pdf', $data) && $data['role'] === 'admin') {
+
             $uploadedPdf = $data['pdf'];
+
             $filename = time() . '.' . $uploadedPdf->getClientOriginalExtension();
             $uploadedPdf->move(public_path('pdfs'), $filename);
         
-            // Update the user's pdf_file attribute
             $user->update(['pdf_file' => $filename]);
         
         }

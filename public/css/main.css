@@ -4,8 +4,11 @@
 
 .bg{
     background-image: url("../img/bg.png");
-    /* background-repeat: no-repeat; */
-    /* background-size: cover;  */
+     background-repeat: no-repeat; 
+     background-size: cover;  
+     justify-content: center;
+     min-height: 100vh;
+     background-position: center;
 }
 .caption{
     text-align: center;
@@ -32,31 +35,32 @@
     background-color: rgba(255, 255, 255, 0.5);
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .cardcafe{
     background-color: rgba(0, 0, 0, 0.5);
     background-size: cover;
     background-position: center;
-    height: 100vh;
-}
-
-.card-container {
-    display: flex; /* Menggunakan Flexbox untuk mengatur elemen card dalam baris */
-     /* Membuat jarak antara card secara merata */
-    flex-wrap: wrap; 
-   /* Jika elemen lebih banyak dari yang bisa muat pada satu baris, maka wrap ke baris berikutnya */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .card {
-    color: white;
-    flex: 0 0 calc(20% - 15px); /* Mengatur lebar card, dengan sedikit ruang di antara (misalnya, 20px) */
-    margin-top: 100px;
-    margin-left: 50px ;
-    margin-right: 25px;
+    border-radius: 30px;
     background-color: rgba(0, 0, 0, 0.5);
-    
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    height: 100%; 
+
+}
+.fixed-size-img {
+    width: 100%; /* Tetapkan lebar gambar ke 100% */
+    height: 200px; /* Atur tinggi gambar sesuai kebutuhan */
 }
 .card-search{
     padding-top: 20px;
@@ -65,19 +69,134 @@
 .row{
     color: white;
 }
-.besar{
-    margin-top: 20px;
+.besar {
+    margin-top: 7px;
     margin-bottom: 20px;
-    width: 500px;
-    height: 500px;
+    max-width: 100%; /* Mengatur lebar maksimum gambar menjadi lebar kontainer */
+    height: auto; /* Biarkan tinggi gambar menyesuaikan dengan lebar */
 }
 .card-img-top{
-    align-self: center;
-    margin-top: 5px;
-    width: 245px;
-    height: 200px;
+    border-radius: 50px;
+    padding: 20px;
 }
 
 .total-text {
     color: black;
+}
+
+.card-body{
+    padding: 25px;
+    margin-top: -15px;
+}
+.card-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.fa-regular.fa-bookmark:active {
+    
+    /* Menentukan styling untuk ikon bookmark saat tombol ditekan */
+    transform: scale(1.2); /* Membesarkan ikon */
+    transition: transform 0.2s ease; /* Animasi perubahan skala */
+}
+
+.card-wrapper .fa-regular.fa-bookmark{
+    margin-top: 15px;
+    font-size: 25px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    float: left;
+    height: 46px;
+    margin-left: 10px;
+   
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+.review-wrapper{
+    height: 300px;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+#map { height: 400px; }
+
+.dropdown-cart  {
+    width: 500px; /* Atur lebar maksimum */
+    max-height: 400px;
+    overflow: hidden;
+    border: 1px solid #ddd; /* Tambahkan border */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Tambahkan shadow untuk depth */
+    font-size: 14px; /* Atur ukuran font */
+    overflow: auto;
+    overflow-x: hidden;
+
+}
+.cart-img{
+    border-radius: 30px; 
+    
+}
+.container-contact{
+    margin-top: 250px;
+}
+.gold-star{
+    color: gold;
+}
+
+.saveWrapper{
+    font-size: 30px;
+    margin-left: 50px;
+}
+.buttonCafeMenu{
+    width: 200px;
+    margin-left: 10px;
+    background-color: rgb(21, 177, 104);
+}
+.buttonCafeMenu, .saveWrapper a {
+    color: white; /* Warna default */
+    text-decoration: none; /* Menghilangkan underline */
+}
+
+.saveWrapper a.clicked {
+    color: red !important; /* Warna merah setelah diklik */
+}
+textarea{
+   
+    background:var(--light);
+    border: none;
+    outline: none;
+    resize: none;
 }
