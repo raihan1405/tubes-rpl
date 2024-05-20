@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->String('komentar');
             $table->integer('rating');
-            $table->tinyInteger('status');
             $table->timestamps();
 
             $table->unsignedBigInteger('cafe_id');
@@ -28,7 +27,6 @@ return new class extends Migration
  
             $table->foreign('user_id')->references('id')->on('users');
 
-            // $table->foreign('cafe_id')->references('id')->on('cafe')->onDelete('cascade');
         });
     }
 

@@ -12,9 +12,11 @@ class Favorite extends Model
     protected $table = 'favorite';
     protected $fillable = ['user_id', 'cafe_id'];
 
+    //punya 1 cafe_id dan 1 user_id
+
     public function cafe()
     {
-        return $this->belongsTo(Cafe::class,'cafe_id');
+        return $this->belongsTo(Cafe::class,'cafe_id'); 
     }
     public function user()
     {

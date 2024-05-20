@@ -14,12 +14,12 @@ class User extends Authenticatable
 
     public function cafes()
     {
-        return $this->hasMany(Cafe::class);
+        return $this->hasMany(Cafe::class); //relasi one to many sama cafe
     }
 
     public function favorites()
     {
-        return $this->hasMany(Favorite::class);  
+        return $this->hasMany(Favorite::class);  //relasi one to many sama user
     }
     /**
      * The attributes that are mass assignable.

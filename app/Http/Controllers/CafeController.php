@@ -18,11 +18,17 @@ class CafeController extends Controller
     {
         $cafes = Cafe::with('reviews')->get();
 
+
         $cafes->each(function ($cafe) {
             $cafe->averageRating = $cafe->reviews->avg('rating');   
         });
 
         $sortedCafes = $cafes->sortByDesc('averageRating'); //sorting berdasarkan nilai rating
+
+        if(request()->segment(1) == 'api') return response()->json([
+            'error' => false,
+            'list' => $sortedCafes,
+        ]);
 
         return view('cafe.index', ['cafes' => $sortedCafes]);
     }
@@ -176,11 +182,8 @@ class CafeController extends Controller
     {
 
          $cafe = Cafe::find($id);
-
          $cafe->menus()->delete();
-    
          $cafe->reviews()->delete();
-      
          $cafe->delete();
     
         return redirect('/table-cafe')->with('success','Data berhasil dihapus');

@@ -7,32 +7,32 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function __construct()
-{
-    $this->middleware('developer')->only('index');
-}
+    // public function __construct()
+    // {
+    //     $this->middleware('developer')->only('index');
+    // }
 
     public function index()
     {
         $users = User::all();
-        return view('admin.userIndex', ['users' => $users]);
+        return view('admin.userIndex', compact('users'));
     }
 
-    public function accept(User $user)
-    {
-        // Update the user status to 'approved'
-        $user->update(['status' => 'approved']);
+    // public function accept(User $user)
+    // {
+    //     
+    //     $user->update(['status' => 'approved']);
 
-        // Redirect or return a response as needed
-        return redirect()->back();
-    }
+    //     
+    //     return redirect()->back();
+    // }
 
-    public function reject(User $user)
-    {
-        // Update the user status to 'rejected'
-        $user->update(['status' => 'rejected']);
+    // public function reject(User $user)
+    // {
+    //    
+    //     $user->update(['status' => 'rejected']);
 
-        // Redirect or return a response as needed
-        return redirect()->back();
-    }
+    //    
+    //     return redirect()->back();
+    // }
 };

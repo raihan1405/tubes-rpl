@@ -13,7 +13,9 @@ class Menu extends Model
     protected $fillable = ['nama', 'harga', 'gambar', 'user_id', 'cafe_id'];
 
     public function cafes()
-{
-    return $this->belongsToMany(Cafe::class);
-}
+    {
+        // return $this->belongsToMany(Cafe::class);  kurang tepat penggunaanya
+        // return $this->hasMany(Cafe::class);  kurang tepat juga
+        return $this->belongsTo(Cafe::class);  // 1 menu itu punya hubungan dengan 1 cafe
+    }
 }

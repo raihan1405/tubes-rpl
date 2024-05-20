@@ -18,8 +18,9 @@ class MenuController extends Controller
     {
         $menu = Menu::with('cafe_id')->get();
         
-        return view('menu.index', compact('menu'));
+        return view('menu.index', compact('menu'));  
     }
+
     public function indexByCafe($cafe_id)
     {
         // $menu = Menu::whereHas('cafe', function ($query) use ($cafe_id) {
@@ -28,18 +29,17 @@ class MenuController extends Controller
 
         // return view('menu.index', ['menu' => $menu]);
     }
+
     public function indexAdmin()
     {
         $user = auth()->user();
-
-        // Check if the user has cafes associated with them
         $cafes = $user->cafes ?? collect();
 
-        $menu = Menu::whereIn('cafe_id', $cafes->pluck('id'))->get();
+        $menu = Menu::whereIn('cafe_id', $cafes->pluck('id'))->get();  // mencari menu yang hanya terdapat id user yang sedang login
 
         $title = 'Delete Menu';
         $text = "Are you sure you want to delete?";
-        confirmDelete($title, $text);
+        confirmDelete($title, $text);   //konfirmasi penghapusan untuk script js
 
         return view('admin.menuIndex', compact('menu','title','text'));
 
@@ -54,7 +54,8 @@ class MenuController extends Controller
     {
         $userId = Auth::id();
         $cafes = Cafe::where('user_id', $userId)->get();
-        return view('menu.create', ['cafes' => $cafes]);
+
+        return view('menu.create', compact('cafes'));
     }
 
     /**
@@ -69,7 +70,7 @@ class MenuController extends Controller
             'nama' => 'required',
             'harga' => 'required',
             'gambar' => 'required|mimes:jpg,jpeg,png',
-            'cafe_id' => 'required', // Validate that the cafe_id exists in the cafes table
+            'cafe_id' => 'required', 
         ]);
     
         $filename = time() . '.' . $request->gambar->extension();
@@ -100,7 +101,7 @@ class MenuController extends Controller
         
         $menu = Menu::where('cafe_id', $id)->get();
         $cafe = $id;
-        return view('menu.index', ['menu' => $menu, 'cafe' => $cafe]);
+        return view('menu.index', compact('menu','cafe'));
     }
 
     /**
@@ -141,7 +142,7 @@ class MenuController extends Controller
             'nama' => 'required',
             'harga' => 'required',
             'gambar' => 'required|mimes:jpg,jpeg,png',
-            'cafe_id' => 'required', // Validate that the cafe_id exists in the cafes table
+            'cafe_id' => 'required', 
         ]);
     
         $filename = time() . '.' . $request->gambar->extension();
@@ -154,7 +155,7 @@ class MenuController extends Controller
         $menu->harga = $request->harga;
         $menu->gambar = $filename;
         $menu->user_id = $user->id;
-        $menu->cafe_id = $request->cafe_id; // Set the cafe_id
+        $menu->cafe_id = $request->cafe_id; 
         
         $menu->save();
 
@@ -181,11 +182,10 @@ class MenuController extends Controller
         $menu = Menu::where('cafe_id', $id)->get();
         $cafe = $id;
 
-        // Check if there is a search query
+        
         $query = $request->input('query');
     
-     
-        // Perform the search logic using the $query
+    
         $keywords = explode(' ', $query);
         $menu = Menu::where('cafe_id', $id)->where(function ($queryBuilder) use ($keywords) {
             foreach ($keywords as $keyword) {
@@ -196,13 +196,14 @@ class MenuController extends Controller
         return view('menu.index', compact('menu','cafe'));
     
     }
+
     public function addToCart($id)
     {
         $menu = Menu::findOrFail($id);
   
         $cart = session()->get('cart', []);
 
-        if(isset($cart[$id])) {
+        if(isset($cart[$id])) { // apakah ada item yang sama di dalam array?
             $cart[$id]['quantity']++;
         }  else {
             $cart[$id] = [
@@ -225,6 +226,7 @@ class MenuController extends Controller
 
         return redirect()->back()->with('success', 'Cart cleared successfully!');
     }
+
     public function cart()
     {
         $title = 'Delete Menu';

@@ -27,7 +27,7 @@ class StripeController extends Controller
                     'product_data' => [
                         'name' => $product_name,
                     ],
-                    'currency'     => 'USD',
+                    'currency'     => 'IDR',
                     'unit_amount'  => $unit_amount,
                 ],
                 'quantity' => $quantity
@@ -41,7 +41,7 @@ class StripeController extends Controller
             'metadata'              => [
                 'user_id' => "0001"
             ],
-            'customer_email' => "$user->email", //$user->email,
+            'customer_email' => "$user->email", 
             'success_url' => route('success'),
             'cancel_url'  => route('cancel'),
         ]);
